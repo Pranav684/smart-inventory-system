@@ -1,18 +1,13 @@
 require("dotenv").config();
-const express = require("express");
-const connectDB = require("./config/db");
+const http = require("http");
+const app = require("./src/app");
 
-const app = express();
-
-// Connect mongodb
-connectDB();
-
-// Middleware
-app.use(express.json());
-
-// routes
-app.get('/', (req, res) => res.send("Api is running..."));
-
-// Server
 const PORT = process.env.PORT || 8000;
-app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+
+const server = http.createServer(app);
+
+try {
+  server.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+} catch (error) {
+  console.log(".env is not included");
+}
